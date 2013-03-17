@@ -1,0 +1,55 @@
+<div class="overview-container">
+
+    <ul class="nav nav-tabs">
+        <li data-bind="click: showOverviewByYear, css: {'active': yearOverviewActive}"><a href="#">Éves</a></li>
+        <li data-bind="click: showOverviewByMonth, css: {'active': monthOverviewActive}"><a href="#">Havi</a></li>
+    </ul>
+    
+    <div data-bind="visible: yearOverviewActive" class="overview-by-year-container">
+        Éves
+    </div>
+
+    <div data-bind="visible: monthOverviewActive" class="overview-by-month-container">
+        
+        <div data-bind="visible: hasThisMonthFilled">
+            
+            <div class="year-selector">
+                <a data-bind='click: setPrevYear' href="#" onfocus="blur()">
+                    <i class='icon-chevron-left'></i>
+                </a>
+                <div data-bind='text:yearToShow'></div>
+                <a data-bind='click: setNextYear' href="#" onfocus="blur()">
+                    <i class='icon-chevron-right'></i>
+                </a>
+            </div>
+
+            <div class="month-selector">
+                <a data-bind='click: setPrevMonth' href="#" onfocus="blur()">
+                    <i class='icon-chevron-left'></i>
+                </a>
+                <div data-bind='text: getMonthStringByInt(monthToShow)'></div>
+                <a data-bind='click: setNextMonth' href="#" onfocus="blur()">
+                    <i class='icon-chevron-right'></i>
+                </a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Forrás neve</th>
+                        <th>Érték</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: main.currMonthOverview">
+                    <tr>
+                        <td data-bind='text: name'></td>
+                        <td data-bind='text: source_value'></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="addMonthlyOverview" data-bind="visible: !hasThisMonthFilled()">
+        </div>
+    </div>
+</div>

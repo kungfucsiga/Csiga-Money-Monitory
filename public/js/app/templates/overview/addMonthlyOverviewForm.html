@@ -1,0 +1,17 @@
+
+<form id="add-new-source-form">
+    <fieldset>
+        <legend>Kérlek tölts ki a havi kimutatást!</legend>
+        
+        <% _.each(sources, function(source) { %>
+        
+        <label><%= source.name %></label>
+        <input name="source-id-<%= source.id %>" class="required number" type="text" placeholder="pl: 110000">
+        
+        <% }) %>
+        
+        <br/>
+        <button type="submit" class="btn">Ment</button>
+    </fieldset>
+</form> 
+

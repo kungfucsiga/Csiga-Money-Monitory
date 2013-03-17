@@ -1,0 +1,23 @@
+.year-selector,
+.month-selector {
+    display: table;
+    margin: 0 auto;
+}
+
+.year-selector div,
+.month-selector div {
+    width: 70px;
+    text-align: center;
+}
+
+.year-selector a,
+.year-selector div,
+.month-selector a,
+.month-selector div {
+    float: left;
+}
+
+.year-selector a:hover,
+.month-selector a:hover {
+    text-decoration: none;
+}
