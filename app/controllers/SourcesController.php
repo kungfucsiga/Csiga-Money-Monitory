@@ -48,7 +48,8 @@ class SourcesController extends BaseController {
 	 */
 	public function show($id)
 	{
-		//
+            $source = Sources::find($id);
+            echo json_encode($source->name);
 	}
 
 	/**

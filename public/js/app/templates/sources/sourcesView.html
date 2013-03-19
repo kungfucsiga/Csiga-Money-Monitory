@@ -7,6 +7,9 @@
             <tr>
                 <td data-bind="text: name, attr: { 'data-id': id }"></td>
                 <td>
+                    <i data-bind="click: $root.editSource" class="edit-source icon-edit"></i>
+                </td>
+                <td>
                     <i data-bind="click: $root.deleteSource" class='delete-source icon-trash'></i>
                 </td>
             </tr>

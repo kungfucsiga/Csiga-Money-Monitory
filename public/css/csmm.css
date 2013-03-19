@@ -29,6 +29,28 @@
     width: 300px;
 }
 
-.sources-container .delete-source {
+.sources-container .delete-source,
+.sources-container .edit-source {
     cursor: pointer;
 }
+
+.overview-table {
+    width: 400px;
+    margin: 50px auto;
+}
+
+.overview-table th {
+    text-align: left;
+}
+
+.sum-container {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.sum-container span:after,
+.source-value:after,
+.last-month-difference:after {
+    content: ' Ft'
+}
+

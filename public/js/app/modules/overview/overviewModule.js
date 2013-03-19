@@ -32,6 +32,8 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
             overviewModule.monthOverviewActive(true);
             overviewModule.yearOverviewActive(false);
             overviewModule.averageOverviewActive(false);
+            this.calculateSum();
+            this.showDirectionOfDifference();
         },
                 
         showOverviewByAverage: function() {
@@ -108,6 +110,36 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
             
             var monthString = this.getMonthString();
             main.currMonthOverview(main.overviewObj[monthString]);
+            
+            this.calculateSum();
+            this.showDirectionOfDifference();
+        },
+                
+        calculateSum: function() {
+    
+            var sum = 0;
+            $(".overview-table .source-value").each(function() {
+                
+                var value = parseInt($(this).text());
+                sum += value;
+            });
+            
+            $(".sum-value").text(sum);
+        },
+                
+        showDirectionOfDifference: function() {
+            
+            $(".overview-table .last-month-difference").each(function() {
+                
+                var column = $(this);
+                var row = column.closest('tr');
+                
+                var directionOfDifferenceColumn = row.find('.direction-of-difference');
+                
+                var value = parseInt(column.text());
+                if (value >= 0) directionOfDifferenceColumn.addClass('icon-hand-up');
+                else directionOfDifferenceColumn.addClass('icon-hand-down');
+            });
         },
                 
         getMonthStringByInt: function() {

@@ -34,7 +34,7 @@
                 </a>
             </div>
 
-            <table>
+            <table class="overview-table">
                 <thead>
                     <tr>
                         <th>Forrás neve</th>
@@ -44,12 +44,20 @@
                 </thead>
                 <tbody data-bind="foreach: main.currMonthOverview">
                     <tr>
-                        <td data-bind='text: name'></td>
-                        <td data-bind='text: source_value'></td>
-                        <td>234</td>
+                        <td class="name" data-bind='text: name'></td>
+                        <td class="source-value" data-bind='text: source_value'></td>
+                        <td class="last-month-difference" data-bind='text: last_month_difference'></td>
+                        <td class="direction-of-difference">
+                            <i></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="sum-container">
+                <b>Összesen:</b> 
+                <span class="sum-value"></span>
+            </div>
         </div>
         
         <div id="addMonthlyOverview" data-bind="visible: !hasThisMonthFilled()">

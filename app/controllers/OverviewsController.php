@@ -1,6 +1,28 @@
 <?php
 
 class OverviewsController extends BaseController {
+    
+    
+        private function getLastDateString($date_string) {
+            
+            $exploded_string = explode('-',$date_string);
+            $year = $exploded_string[0];
+            $month = $exploded_string[1];
+            
+            $month = (int)$month;
+            $month--;
+            
+            if ($month == 0) {
+                $month = 12;
+                $year = (int)$year;
+                $year--;
+            }
+            
+            if ( strlen($month) == 1) $month = '0'.$month;
+            $date_string = $year . '-' . $month . '-01';
+            
+            return $date_string;
+        }
 
 	/**
 	 * Display a listing of the resource.
@@ -15,6 +37,27 @@ class OverviewsController extends BaseController {
                         ->select('overviews.source_id', 'overviews.source_value', 'overviews.date','sources.name')
                         ->get();
             
+            foreach($overviews as $overview) {
+                
+                $source_id = $overview->source_id;
+                $source_value = (int)$overview->source_value;
+                $last_date_string = $this->getLastDateString($overview->date);
+                
+                $result = DB::table('overviews')
+                            ->where('source_id', '=', $source_id)
+                            ->where('date', '=', "$last_date_string")
+                            ->first();
+                
+                if (is_object($result)) {
+                    
+                    $last_month_source_value = (int)$result->source_value;
+                    $difference = $source_value - $last_month_source_value;
+                }
+                else $difference = 0;
+                
+                $overview->last_month_difference = $difference;
+            }
+
             return json_encode($overviews);
 	}
 

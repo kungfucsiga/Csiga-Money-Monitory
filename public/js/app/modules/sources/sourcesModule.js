@@ -22,6 +22,26 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                 ko.applyBindings(sourcesModule, $(".sources-container")[0]);
             });
         },
+                
+        editSource: function(data) {
+            
+            var id = data.id;
+            
+            require(['text!../app/templates/sources/editSourceForm.html'],function(editSourceForm) {
+                
+                $.ajax({
+                    url: '/sources/' + id,
+                    dataType: 'json',
+                    success: function(sourceName) {
+                        
+                        $('.container').empty();
+                        var tpl = _.template(editSourceForm,{name: sourceName});
+                        $('.container').append(tpl);
+                        ko.applyBindings(sourcesModule, $(".sources-container")[0]);
+                    }
+                });
+            });
+        },
         
         saveNewSource: function() {
             
@@ -56,6 +76,10 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                     }
                 })
             }
+        },
+        
+        updateSource: function() {
+            
         },
         
         deleteSource: function(data) {

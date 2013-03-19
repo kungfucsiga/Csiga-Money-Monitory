@@ -6,7 +6,6 @@ define(['knockout','global','sourcesModule','overviewModule','profilesModule','u
         overviewActive: ko.observable(true),
         sourcesActive: ko.observable(false),
         profilesActive: ko.observable(false),
-        
         init: function() {
             
             // get data
@@ -15,38 +14,14 @@ define(['knockout','global','sourcesModule','overviewModule','profilesModule','u
             })
             
             var ajax2 = $.getJSON('/overviews',function(overview) {
+                
                 main.overviewObj = _.groupBy(overview, function(obj){ return obj.date });
+                
                 var monthString = overviewModule.getMonthString();
                 var lastMonthString = overviewModule.getLastMonthString();
                 
                 main.currMonthOverview = ko.observableArray(main.overviewObj[monthString]);
                 main.lastMonthOverview = ko.observableArray(main.overviewObj[lastMonthString]);
-                
-                // különbségképzés
-                var thisMonthObj = main.overviewObj[monthString];
-                var lastMonthObj = main.overviewObj[lastMonthString];
-                
-                var calculatedOverviewArr = new Array();
-                $(thisMonthObj).each(function(index,obj) {
-                    
-                    var sourceId = obj.source_id;
-                    var thisMonthSourceValue = parseInt(obj.source_value);
-                    
-                    var filteredObj = _.where(lastMonthObj, {source_id: sourceId}) 
-                    
-                    var firstObj = $(filteredObj).first();
-                    var lastMonthSourceValue = parseInt(firstObj[0].source_value);
-                    
-                    var calculatedObj = {
-                        name: obj.name,
-                        date: obj.date,
-                        thisMonthSourceValue: thisMonthSourceValue,
-                        lastMonthSourceValue: lastMonthSourceValue
-                    }
-                    
-                    calculatedOverviewArr.push(calculatedObj);
-                    alert('IDÁIG MEGVAN');
-                });
             });
             
             $.when(ajax1, ajax2).done(function() {
