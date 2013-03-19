@@ -21,3 +21,14 @@
 .month-selector a:hover {
     text-decoration: none;
 }
+
+
+
+.sources-container table {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.sources-container .delete-source {
+    cursor: pointer;
+}

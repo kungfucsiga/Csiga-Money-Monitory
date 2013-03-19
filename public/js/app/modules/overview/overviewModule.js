@@ -5,7 +5,9 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
         
         yearOverviewActive: ko.observable(true),
         monthOverviewActive: ko.observable(false),
+        averageOverviewActive: ko.observable(false),
         hasThisMonthFilled: ko.observable(true),
+        
         monthToShow: ko.observable(global.getCurrentMonth()),
         yearToShow: ko.observable(global.getCurrentYear()),
         init: function() {
@@ -22,18 +24,45 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
             
             overviewModule.yearOverviewActive(true);
             overviewModule.monthOverviewActive(false);
+            overviewModule.averageOverviewActive(false);
         },
                 
         showOverviewByMonth: function() {
     
             overviewModule.monthOverviewActive(true);
             overviewModule.yearOverviewActive(false);
+            overviewModule.averageOverviewActive(false);
+        },
+                
+        showOverviewByAverage: function() {
+            
+            overviewModule.monthOverviewActive(false);
+            overviewModule.yearOverviewActive(false);
+            overviewModule.averageOverviewActive(true);
         },
                 
         getMonthString: function() {
             
             var year = this.yearToShow().toString();
             var month = this.monthToShow().toString();
+            
+            if (month.length == 1) month = '0' + month;
+            
+            var monthString = year + '-' + month + '-01';
+            return monthString;
+        },
+                
+        getLastMonthString: function() {
+    
+            var year = this.yearToShow();
+            var month = this.monthToShow() - 1;
+            if (month == 0) {
+                month = 12;
+                year--;
+            }
+            
+            year = year.toString();
+            month = month.toString();
             
             if (month.length == 1) month = '0' + month;
             
@@ -120,10 +149,19 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                     url: url,
                     data: data,
                     type: 'post',
-                    dataType: 'json',
-                    success: function(res) {
+                    success: function() {
                         
-                        console.log(res);
+                        var monthOverviewObj = {
+                            date: "2013-03-01",
+                            name: "Citibank",
+                            source_id: "1",
+                            source_value: "456"
+                        };
+                        
+                        console.log(main.currMonthOverview());
+                        
+                        
+                        overview.hasThisMonthFilled(true);
                     },
                     error: function() {
                         toaster.toast("Hiba történt, kérem próbálja újra!");

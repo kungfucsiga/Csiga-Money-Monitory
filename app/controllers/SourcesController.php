@@ -81,7 +81,18 @@ class SourcesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+            
 	}
-
+        
+        
+        /**
+         * Deleting a source
+         * 
+         * @param type $id
+         */
+        public function deleteSource($id) {
+            
+            $source = Sources::find($id);
+            $source->delete();
+        }
 }

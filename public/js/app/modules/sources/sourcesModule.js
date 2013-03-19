@@ -47,7 +47,7 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                         if (res.success) {
                             toaster.toast("Forrás sikeresen hozzáadva!");
                         }
-                        main.sources.push({
+                        main.sources().push({
                             name: form.find('input[name=sourceName]').val()
                         });
                     },
@@ -55,6 +55,29 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                         toaster.toast("Hiba történt, kérem próbálja újra!");
                     }
                 })
+            }
+        },
+        
+        deleteSource: function(data) {
+            
+            var result = confirm('Biztos vagy benne?');
+            if (result) {
+                
+                var id = data.id;
+                
+                $.ajax({
+                   url: '/sources/' + id + '/delete',
+                   success: function() {
+                       
+                       var sourceToDelete = _.find(main.sources(), function(source){ return source.id == id; });
+                       var cleanedArr = _.without(main.sources(), sourceToDelete);
+                       main.sources(cleanedArr);
+                       
+                   },
+                   error: function() {
+                       toaster.toast("Hiba történt, kérem próbálja újra!");
+                   }
+                });
             }
         },
         

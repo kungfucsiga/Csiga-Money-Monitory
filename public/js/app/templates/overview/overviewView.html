@@ -3,6 +3,7 @@
     <ul class="nav nav-tabs">
         <li data-bind="click: showOverviewByYear, css: {'active': yearOverviewActive}"><a href="#">Éves</a></li>
         <li data-bind="click: showOverviewByMonth, css: {'active': monthOverviewActive}"><a href="#">Havi</a></li>
+        <li data-bind="click: showOverviewByAverage, css: {'active': averageOverviewActive}"><a href="#">Átlagos</a></li>
     </ul>
     
     <div data-bind="visible: yearOverviewActive" class="overview-by-year-container">
@@ -38,12 +39,14 @@
                     <tr>
                         <th>Forrás neve</th>
                         <th>Érték</th>
+                        <th>Változás</th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: main.currMonthOverview">
                     <tr>
                         <td data-bind='text: name'></td>
                         <td data-bind='text: source_value'></td>
+                        <td>234</td>
                     </tr>
                 </tbody>
             </table>
@@ -52,4 +55,9 @@
         <div id="addMonthlyOverview" data-bind="visible: !hasThisMonthFilled()">
         </div>
     </div>
+    
+    <div data-bind="visible: averageOverviewActive" class="overview-by-average-container">
+        Átlagos
+    </div>
+    
 </div>

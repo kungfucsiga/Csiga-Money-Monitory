@@ -16,6 +16,8 @@ Route::get('/', function()
     return View::make('main.index');
 });
 
-Route::resource('sources', 'SourcesController');
+Route::get('sources/{id}/delete',array('uses' => 'SourcesController@deleteSource'));
 
+
+Route::resource('sources', 'SourcesController');
 Route::resource('overviews', 'OverviewsController');

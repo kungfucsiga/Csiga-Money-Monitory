@@ -35,8 +35,22 @@ class OverviewsController extends BaseController {
 	 */
 	public function store()
 	{
-            $input = Input::all();
-            print_r($input);
+            $all_input = Input::all();
+            $date = date('Y-m') . '-01';
+            
+            foreach($all_input as $key => $value) {
+                
+                $exploded_key = explode('-', $key);
+                $source_id = $exploded_key[2];
+                
+                DB::table('overviews')->insert(
+                    array(
+                        'source_id' => $source_id, 
+                        'source_value' => $value,
+                        'date' => $date
+                    )
+                );
+            }
 	}
 
 	/**

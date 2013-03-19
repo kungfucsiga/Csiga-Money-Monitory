@@ -1,14 +1,16 @@
 <div class="sources-container">
+    <h2>Források</h2>
+    <a data-bind="click: addNewSource" class="btn" href="#" onfocus="blur()">Új forrás hozzáadása</a>
+
     <table>
-        <thead>
-            <tr><th>Forrás neve</th></tr>
-        </thead>
         <tbody data-bind="foreach: main.sources">
             <tr>
-                <td data-bind="text: name"></td>
+                <td data-bind="text: name, attr: { 'data-id': id }"></td>
+                <td>
+                    <i data-bind="click: $root.deleteSource" class='delete-source icon-trash'></i>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a data-bind="click: addNewSource" class="btn" href="#" onfocus="blur()">Új forrás hozzáadása</a>
 </div>
