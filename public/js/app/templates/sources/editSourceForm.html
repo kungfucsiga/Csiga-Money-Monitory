@@ -1,9 +1,10 @@
 <div class="sources-container">
-    <form id="add-new-source-form">
+    <form id="edit-source-form">
         <fieldset>
             <legend>Forrás módosítása</legend>
             <label>Forrás neve</label>
             <input value="<%= name %>" name="sourceName" class="required" type="text">
+            <input id="source-id" type="hidden" value="<%= id %>" />
             <br/>
             <button data-bind="click: backToSources" type="button" class="btn">Vissza</button>
             <button data-bind="click: updateSource" type="submit" class="btn">Mentés</button>

@@ -86,6 +86,16 @@ class SourcesController extends BaseController {
 	}
         
         
+        public function updateSource($id) {
+            
+            $input = Input::all();
+            $sourceName = $input['sourceName'];
+            $source = Sources::find($id);
+            $source->name = $sourceName;
+            $source->save();
+        }
+        
+        
         /**
          * Deleting a source
          * 

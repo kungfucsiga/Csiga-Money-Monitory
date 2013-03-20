@@ -35,7 +35,7 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                     success: function(sourceName) {
                         
                         $('.container').empty();
-                        var tpl = _.template(editSourceForm,{name: sourceName});
+                        var tpl = _.template(editSourceForm,{name: sourceName,id:id});
                         $('.container').append(tpl);
                         ko.applyBindings(sourcesModule, $(".sources-container")[0]);
                     }
@@ -80,6 +80,21 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
         
         updateSource: function() {
             
+            var sourceName = $('#edit-source-form input[type=text]').val();
+            var id = $("#edit-source-form #source-id").val();
+            
+            $.ajax({
+                url: '/sources/' + id + '/update',
+                data: {sourceName:sourceName},
+                success: function() {
+                    
+                    var origSources = main.sources();
+                    var newSources = new Array();
+                    $(origSources).each(function(index,source) {
+                        if (source.id == id) source.name = sourceName;
+                    });
+                }
+            })
         },
         
         deleteSource: function(data) {

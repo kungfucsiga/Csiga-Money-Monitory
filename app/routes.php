@@ -17,6 +17,7 @@ Route::get('/', function()
 });
 
 Route::get('sources/{id}/delete',array('uses' => 'SourcesController@deleteSource'));
+Route::get('sources/{id}/update',array('uses' => 'SourcesController@updateSource'));
 
 
 Route::resource('sources', 'SourcesController');
