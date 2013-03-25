@@ -10,6 +10,7 @@ require.config({
         bootstrap: 'bootstrap.min',
         validate: 'jquery.validate.min',
         toaster: 'jquery.toaster.min',
+        highcharts: 'highcharts',
         
         // modules
         global: '../app/global',

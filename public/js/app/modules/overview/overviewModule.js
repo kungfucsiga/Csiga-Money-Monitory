@@ -1,5 +1,5 @@
 
-define(['jquery','knockout','underscore','global','validate','toaster'],function($,ko,_,global) {
+define(['jquery','knockout','underscore','global','validate','toaster','highcharts'],function($,ko,_,global) {
     
     var overviewModule = {
         
@@ -17,6 +17,7 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                 $('.container').empty();
                 $('.container').append(overviewView);
                 ko.applyBindings(overviewModule, $(".overview-container")[0]);
+                overviewModule.initYearChart();
             });
         },
                 
@@ -142,7 +143,7 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
             });
         },
                 
-        getMonthStringByInt: function() {
+        getMonthsArr: function() {
             
             var months = [
                 'január',
@@ -159,6 +160,12 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                 'december'
             ];
             
+            return months;
+        },
+                
+        getMonthStringByInt: function() {
+            
+            var months = this.getMonthsArr();
             var monthIndex = parseInt(this.monthToShow());
             return months[monthIndex - 1];
         },
@@ -200,6 +207,51 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                     }
                 })
             }
+        },
+        
+        initYearChart: function() {
+            
+            var months = this.getMonthsArr();
+            
+            var overviewObj = main.overviewObj;
+            alert('ITT KI KELL SZEDNI AZ ELSŐ DÁTUMOT ADATÁBIZSBÓL');
+            var overviewObjFirst = overviewObj['2013-02-01'];
+            
+            var sourceNames = _.pluck(overviewObjFirst, 'name');
+            this.makeChartObject(sourceNames,overviewObj);
+            
+            $('#charts-container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Változás'
+                },
+                xAxis: {
+                    categories: months
+                },
+                yAxis: {
+                    title: {
+                        text: 'Havi változás'
+                    }
+                },
+                series: [{
+                    name: 'Jane',
+                    data: [1,0,4,2,1,2,3,4,5,6,7,8]
+                }, 
+                {
+                    name: 'John',
+                    data: [5,7,3,3]
+                }]
+            });
+        },
+                
+        makeChartObject: function(sourceNames,overviewObj) {
+    
+            $(sourceNames).each(function(sourceIndex,sourceName) {
+//                var result = _.where(overviewObj['2013-02-01'], {name: sourceName});
+//                console.log(result);
+            });
         }
     }
     
