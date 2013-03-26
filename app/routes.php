@@ -18,7 +18,7 @@ Route::get('/', function()
 
 Route::get('sources/{id}/delete',array('uses' => 'SourcesController@deleteSource'));
 Route::get('sources/{id}/update',array('uses' => 'SourcesController@updateSource'));
-
+Route::get('getDatesFromThisYear/{year}',array('uses' => 'OverviewsController@getDatesFromThisYear'));
 
 Route::resource('sources', 'SourcesController');
 Route::resource('overviews', 'OverviewsController');

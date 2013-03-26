@@ -60,7 +60,15 @@ class OverviewsController extends BaseController {
 
             return json_encode($overviews);
 	}
-
+        
+        
+        public function getDatesFromThisYear($year) {
+            
+            $results = DB::select("SELECT DISTINCT date FROM overviews WHERE date LIKE '$year%' ORDER BY created_at DESC");
+            echo json_encode($results);
+        }
+        
+        
 	/**
 	 * Show the form for creating a new resource.
 	 *

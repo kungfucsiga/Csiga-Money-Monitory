@@ -36,6 +36,14 @@ define([],function() {
         getCurrentYear: function() {
             var year = global.dateObj.getFullYear();
             return year;
+        },
+                
+        getMonthByDateString: function(dateString) {
+            
+            var splitted = dateString.split('-');
+            var month = splitted[1];
+            
+            return parseInt(month);
         }
     }
     

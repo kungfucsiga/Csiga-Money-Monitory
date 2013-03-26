@@ -214,11 +214,18 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
             var months = this.getMonthsArr();
             
             var overviewObj = main.overviewObj;
-            alert('ITT KI KELL SZEDNI AZ ELSŐ DÁTUMOT ADATÁBIZSBÓL');
-            var overviewObjFirst = overviewObj['2013-02-01'];
+            var firstDateObjInThisYear = _.first(main.datesInThisYear());
             
+            var monthString = new Array();
+            $(main.datesInThisYear()).each(function(index,dateObj) {
+                
+                var monthNumber = global.getMonthByDateString(dateObj.date);
+                monthString.push( months[monthNumber-1] );
+            });
+            
+            var overviewObjFirst = overviewObj[firstDateObjInThisYear.date];
             var sourceNames = _.pluck(overviewObjFirst, 'name');
-            this.makeChartObject(sourceNames,overviewObj);
+            var seriesArr = this.makeChartObject(sourceNames,overviewObj);
             
             $('#charts-container').highcharts({
                 chart: {
@@ -228,30 +235,42 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
                     text: 'Változás'
                 },
                 xAxis: {
-                    categories: months
+                    categories: monthString
                 },
                 yAxis: {
                     title: {
                         text: 'Havi változás'
                     }
                 },
-                series: [{
-                    name: 'Jane',
-                    data: [1,0,4,2,1,2,3,4,5,6,7,8]
-                }, 
-                {
-                    name: 'John',
-                    data: [5,7,3,3]
-                }]
+                series: seriesArr
             });
         },
                 
         makeChartObject: function(sourceNames,overviewObj) {
     
+            var datesInThisYear = main.datesInThisYear();
+    
+            var seriesArr = new Array();
             $(sourceNames).each(function(sourceIndex,sourceName) {
-//                var result = _.where(overviewObj['2013-02-01'], {name: sourceName});
-//                console.log(result);
+                
+                var seriesObjArr = new Array();
+                $(datesInThisYear).each(function(index,dateObj) {
+                    
+                    var dateString = dateObj.date;
+                    var result = _.where(overviewObj[dateString], {name: sourceName});
+                    var last_month_difference = result[0].last_month_difference;
+                    seriesObjArr.push(last_month_difference);
+                })
+                
+                var seriesObj = {
+                    name: sourceName,
+                    data: seriesObjArr
+                }
+                
+                seriesArr.push(seriesObj);
             });
+            
+            return seriesArr;
         }
     }
     

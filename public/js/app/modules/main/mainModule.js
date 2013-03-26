@@ -24,7 +24,13 @@ define(['knockout','global','sourcesModule','overviewModule','profilesModule','u
                 main.lastMonthOverview = ko.observableArray(main.overviewObj[lastMonthString]);
             });
             
-            $.when(ajax1, ajax2).done(function() {
+            var currentYear = global.getCurrentYear();
+            var ajax3 = $.getJSON('/getDatesFromThisYear/' + currentYear,function(datesInThisYear) {
+                
+                main.datesInThisYear = ko.observableArray(datesInThisYear);
+            });
+            
+            $.when(ajax1, ajax2, ajax3).done(function() {
                 
                 ko.applyBindings(mainModule);
                 mainModule.showOverview();
