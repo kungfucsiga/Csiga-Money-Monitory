@@ -1,0 +1,17 @@
+<table class="table" id="average-overview-table">
+
+    <% _.each(sources, function(source) { %>
+    <tr>
+        <td>
+            <%= source.sourceName %>
+        </td>
+        <td>
+            <%= source.allDifferenceBySource %> Ft
+        </td>
+    </tr>
+    <% }) %>
+
+</table>
+
+
+

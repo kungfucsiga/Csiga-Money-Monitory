@@ -12,6 +12,16 @@ define(['jquery','knockout','underscore','global','validate','toaster'],function
                 ko.applyBindings(sourcesModule, $(".sources-container")[0]);
             });
         },
+                
+        getSourceNames: function() {
+            
+            var overviewObj = main.overviewObj;
+            var firstDateObjInThisYear = _.first(main.datesInThisYear());
+            var overviewObjFirst = overviewObj[firstDateObjInThisYear.date];
+            var sourceNames = _.pluck(overviewObjFirst, 'name');
+            
+            return sourceNames;
+        },
         
         addNewSource: function() {
             

@@ -26,9 +26,10 @@ require.config({
     }
 });
 
-require(['jquery','global','mainModule','overviewModule'],function(jQuery,globalModule,mainModule,overviewModule) {
+require(['jquery','global','mainModule','sourcesModule','overviewModule'],function(jQuery,globalModule,mainModule,sourcesModule,overviewModule) {
     
     main = mainModule;
+    sources = sourcesModule;
     global = globalModule;
     overview = overviewModule; 
     $ = jQuery;

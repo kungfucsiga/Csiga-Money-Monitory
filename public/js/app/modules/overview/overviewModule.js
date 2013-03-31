@@ -42,6 +42,38 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
             overviewModule.monthOverviewActive(false);
             overviewModule.yearOverviewActive(false);
             overviewModule.averageOverviewActive(true);
+            
+            if ($("#average-overview-table").length == 0) {
+                
+                var overviewObj = main.overviewObj;
+                var datesInThisYear = main.datesInThisYear();
+                var sourceNames = sources.getSourceNames();
+            
+                var averageBySourcename = new Array();
+                $(sourceNames).each(function(sourceIndex,sourceName) {
+
+                    var allDifferenceBySource = 0;
+                    $(datesInThisYear).each(function(index,dateObj) {
+
+                        var dateString = dateObj.date;
+                        var result = _.where(overviewObj[dateString], {name: sourceName});
+                        var last_month_difference = result[0].last_month_difference;
+                        allDifferenceBySource += last_month_difference;
+                    })
+
+                    var obj = {
+                        sourceName: sourceName,
+                        allDifferenceBySource: allDifferenceBySource       
+                    }
+                    averageBySourcename.push(obj);
+                });
+            
+                require(['text!../app/templates/overview/averageOverview.html'],function(averageView) {
+
+                    var tpl = _.template(averageView,{sources: averageBySourcename});
+                    $(".overview-by-average-container").append(tpl);
+                });                
+            }
         },
                 
         getMonthString: function() {
@@ -197,9 +229,6 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
                             source_value: "456"
                         };
                         
-                        console.log(main.currMonthOverview());
-                        
-                        
                         overview.hasThisMonthFilled(true);
                     },
                     error: function() {
@@ -212,9 +241,7 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
         initYearChart: function() {
             
             var months = this.getMonthsArr();
-            
             var overviewObj = main.overviewObj;
-            var firstDateObjInThisYear = _.first(main.datesInThisYear());
             
             var monthString = new Array();
             $(main.datesInThisYear()).each(function(index,dateObj) {
@@ -223,8 +250,7 @@ define(['jquery','knockout','underscore','global','validate','toaster','highchar
                 monthString.push( months[monthNumber-1] );
             });
             
-            var overviewObjFirst = overviewObj[firstDateObjInThisYear.date];
-            var sourceNames = _.pluck(overviewObjFirst, 'name');
+            var sourceNames = sources.getSourceNames();
             var seriesArr = this.makeChartObject(sourceNames,overviewObj);
             
             $('#charts-container').highcharts({
